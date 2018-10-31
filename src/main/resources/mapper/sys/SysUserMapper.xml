@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.anson.demo.mapper.sys.SysUserMapper">
+
+  <resultMap id="BaseResultMap" type="org.anson.demo.po.sys.SysUser">
+    <id column="id" jdbcType="LONG" property="id" />
+    <result column="no" jdbcType="NVARCHAR" property="no" />
+    <result column="name" jdbcType="NVARCHAR" property="name" />
+    <result column="password" jdbcType="NVARCHAR" property="password" />
+    <result column="email" jdbcType="NVARCHAR" property="email" />
+    <result column="mobile" jdbcType="NVARCHAR" property="mobile" />
+    <result column="profilePhoto" jdbcType="NVARCHAR" property="profilephoto" />
+    <result column="personalStatement" jdbcType="NVARCHAR" property="personalstatement" />
+    <result column="lastUpdateTime" jdbcType="TIMESTAMP" property="lastupdatetime" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Base_Column_List">
+    id, no, name, password, email, mobile, profilePhoto, personalStatement, lastUpdateTime
+  </sql>
+
+  <select id="selectByExample" parameterType="org.anson.demo.pojo.Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from SysUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from SysUser
+    where id = #{id}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="Long">
+    delete from SysUser
+    where id = #{id}
+  </delete>
+
+  <delete id="deleteByExample" parameterType="org.anson.demo.pojo.Example">
+    delete from SysUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <insert id="insert" parameterType="org.anson.demo.po.sys.SysUser">
+    insert into SysUser
+      (id, no, name,
+      password, email, mobile,
+      profilePhoto, personalStatement, lastUpdateTime
+      )
+    values (#{id}, #{no}, #{name},
+      #{password}, #{email}, #{mobile},
+      #{profilephoto}, #{personalstatement}, #{lastupdatetime}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.anson.demo.po.sys.SysUser">
+    insert into SysUser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="no != null">
+        no,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="profilephoto != null">
+        profilePhoto,
+      </if>
+      <if test="personalstatement != null">
+        personalStatement,
+      </if>
+      <if test="lastupdatetime != null">
+        lastUpdateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+      <if test="no != null">
+        #{no},
+      </if>
+      <if test="name != null">
+        #{name},
+      </if>
+      <if test="password != null">
+        #{password},
+      </if>
+      <if test="email != null">
+        #{email},
+      </if>
+      <if test="mobile != null">
+        #{mobile},
+      </if>
+      <if test="profilephoto != null">
+        #{profilephoto},
+      </if>
+      <if test="personalstatement != null">
+        #{personalstatement},
+      </if>
+      <if test="lastupdatetime != null">
+        #{lastupdatetime},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="countByExample" parameterType="org.anson.demo.pojo.Example" resultType="Long">
+    select count(1) from SysUser
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+
+  <update id="updateByExampleSelective" parameterType="map">
+    update SysUser
+    <set>
+      <if test="record.id != null">
+        id = #{record.id},
+      </if>
+      <if test="record.no != null">
+        no = #{record.no},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile},
+      </if>
+      <if test="record.profilephoto != null">
+        profilePhoto = #{record.profilephoto},
+      </if>
+      <if test="record.personalstatement != null">
+        personalStatement = #{record.personalstatement},
+      </if>
+      <if test="record.lastupdatetime != null">
+        lastUpdateTime = #{record.lastupdatetime},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="updateByExample" parameterType="map">
+    update SysUser
+    set id = #{record.id},
+        no = #{record.no},
+        name = #{record.name},
+        password = #{record.password},
+        email = #{record.email},
+        mobile = #{record.mobile},
+        profilePhoto = #{record.profilephoto},
+        personalStatement = #{record.personalstatement},
+        lastUpdateTime = #{record.lastupdatetime}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.anson.demo.po.sys.SysUser">
+    update SysUser
+    <set>
+      <if test="no != null">
+        no = #{no},
+      </if>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="password != null">
+        password = #{password},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile},
+      </if>
+      <if test="profilephoto != null">
+        profilePhoto = #{profilephoto},
+      </if>
+      <if test="personalstatement != null">
+        personalStatement = #{personalstatement},
+      </if>
+      <if test="lastupdatetime != null">
+        lastUpdateTime = #{lastupdatetime},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="org.anson.demo.po.sys.SysUser">
+    update SysUser
+    set no = #{no},
+        name = #{name},
+        password = #{password},
+        email = #{email},
+        mobile = #{mobile},
+        profilePhoto = #{profilephoto},
+        personalStatement = #{personalstatement},
+        lastUpdateTime = #{lastupdatetime}
+    where id = #{id}
+  </update>
+
+</mapper>

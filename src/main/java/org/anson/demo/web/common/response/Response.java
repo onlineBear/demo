@@ -3,6 +3,9 @@ package org.anson.demo.web.common.response;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 响应格式
+ */
 @Data
 @NoArgsConstructor
 public class Response {
