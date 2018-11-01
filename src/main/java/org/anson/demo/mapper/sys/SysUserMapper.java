@@ -1,11 +1,10 @@
 package org.anson.demo.mapper.sys;
 
-import org.anson.demo.po.sys.SysUser;
+import java.util.List;
+import org.anson.demo.pojo.po.sys.SysUser;
 import org.anson.demo.pojo.Example;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
 public interface SysUserMapper {
@@ -21,7 +20,6 @@ public interface SysUserMapper {
 
     List<SysUser> selectByExample(Example example);
 
-    //@Select("select * from SysUser where id=#{id}")
     SysUser selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") SysUser record, @Param("example") Example example);

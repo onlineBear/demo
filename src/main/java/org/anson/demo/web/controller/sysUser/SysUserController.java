@@ -1,12 +1,10 @@
 package org.anson.demo.web.controller.sysUser;
 
+import org.anson.demo.pojo.po.sys.SysUser;
 import org.anson.demo.service.sys.SysUserService;
 import org.anson.demo.web.common.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -15,7 +13,12 @@ public class SysUserController {
     private SysUserService service;
 
     @GetMapping("/{id}")
-    public Response getUser(@PathVariable("id")Long id){
-        return Response.ok(service.getById(id));
+    public Response get(@PathVariable("id")Long id){
+        return service.getById(id);
+    }
+
+    @PostMapping("/add")
+    public Response add(SysUser user){
+        return service.add(user);
     }
 }

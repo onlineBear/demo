@@ -1,16 +1,24 @@
 package org.anson.demo.service.sys;
 
-import org.anson.demo.mapper.sys.SysUserMapper;
-import org.anson.demo.po.sys.SysUser;
+import org.anson.demo.domain.sys.SysUserDomain;
+import org.anson.demo.pojo.po.sys.SysUser;
+import org.anson.demo.web.common.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SysUserService {
     @Autowired
-    private SysUserMapper mapper;
+    private SysUserDomain domain;
 
-    public SysUser getById(Long id){
-        return mapper.selectByPrimaryKey(id);
+    public Response getById(Long id){
+        return Response.ok(domain.selectByPrimaryKey(id));
+    }
+
+    public Response add(SysUser user){
+
+        domain.insert(user);
+
+        return Response.ok(user.getId());
     }
 }

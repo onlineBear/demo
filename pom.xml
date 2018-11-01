@@ -24,6 +24,7 @@
 		<java.version>1.8</java.version>
 		<lombok.version>1.18.4</lombok.version>
 		<org.mybatis.generator.version>1.3.7</org.mybatis.generator.version>
+		<commons-lang3.version>3.8.1</commons-lang3.version>
 	</properties>
 
 	<dependencies>
@@ -70,7 +71,16 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- 工具类 -->
+		<!-- util包 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+
+
+		<!-- ide工具类 -->
 		<!-- lombok -->
 		<dependency>
     		<groupId>org.projectlombok</groupId>
