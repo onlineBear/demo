@@ -80,6 +80,7 @@
 		</dependency>
 
 
+
 		<!-- ide工具类 -->
 		<!-- lombok -->
 		<dependency>
@@ -123,15 +124,6 @@
 				</dependencies>
 			</plugin>
 		</plugins>
-
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-        </resources>
 	</build>
 
 </project>

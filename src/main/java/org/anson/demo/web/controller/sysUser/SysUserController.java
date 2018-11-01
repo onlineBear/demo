@@ -1,6 +1,6 @@
 package org.anson.demo.web.controller.sysUser;
 
-import org.anson.demo.pojo.po.sys.SysUser;
+import org.anson.demo.pojo.po.sys.SysUserPo;
 import org.anson.demo.service.sys.SysUserService;
 import org.anson.demo.web.common.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class SysUserController {
     }
 
     @PostMapping("/add")
-    public Response add(SysUser user){
+    public Response add(SysUserPo user){
         return service.add(user);
     }
 }

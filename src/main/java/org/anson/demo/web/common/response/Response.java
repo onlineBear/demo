@@ -1,16 +1,25 @@
 package org.anson.demo.web.common.response;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 响应格式
  */
 @Data
-@NoArgsConstructor
 public class Response {
-    private ResponseCodeEnum code;
+    /**
+     * 状态码
+     */
+    private String code;
+
+    /**
+     * 数据
+     */
     private Object data;
+
+    /**
+     * 信息
+     */
     private String msg;
 
     /**
@@ -48,14 +57,14 @@ public class Response {
         return new Response(ResponseCodeEnum.SERVER_ERROR, null, msg);
     }
 
-    public Response(ResponseCodeEnum code, Object data, String msg){
-        this.code = code;
+    private Response(ResponseCodeEnum code, Object data, String msg){
+        this.code = code.code;
         this.data = data;
         this.msg = msg;
     }
 
     /**
-     * 响应代码
+     * 状态代码 - 枚举
      */
     private enum ResponseCodeEnum {
 

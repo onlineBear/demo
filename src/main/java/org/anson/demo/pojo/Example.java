@@ -4,9 +4,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 查询条件
+ */
 public class Example {
+    /**
+     * 排序列 (可多列)
+     */
     protected String orderByClause;
 
+    /**
+     * 是否去重
+     */
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
