@@ -8,8 +8,8 @@ go
 
 -- 用户表
 /*
-if object_id('SysUserPo', 'U') is not null
-  drop table SysUserPo
+if object_id('SysUser', 'U') is not null
+  drop table SysUser
 go
 */
 

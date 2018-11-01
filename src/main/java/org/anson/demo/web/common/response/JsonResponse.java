@@ -6,7 +6,7 @@ import lombok.Data;
  * 响应格式
  */
 @Data
-public class Response {
+public class JsonResponse<T> {
     /**
      * 状态码
      */
@@ -15,7 +15,7 @@ public class Response {
     /**
      * 数据
      */
-    private Object data;
+    private T data;
 
     /**
      * 信息
@@ -26,8 +26,8 @@ public class Response {
      * 成功
      * @return
      */
-    public static Response ok(){
-        return new Response(ResponseCodeEnum.OK, null, null);
+    public static JsonResponse ok(){
+        return new JsonResponse(ResponseCodeEnum.OK, null, null);
     }
 
     /**
@@ -35,8 +35,8 @@ public class Response {
      * @param data
      * @return
      */
-    public static Response ok(Object data){
-        return new Response(ResponseCodeEnum.OK, data, null);
+    public static JsonResponse ok(Object data){
+        return new JsonResponse(ResponseCodeEnum.OK, data, null);
     }
 
     /**
@@ -44,8 +44,8 @@ public class Response {
      * @param msg
      * @return
      */
-    public static Response clientErr(String msg){
-        return new Response(ResponseCodeEnum.CLIENT_ERROR, null, msg);
+    public static JsonResponse clientErr(String msg){
+        return new JsonResponse(ResponseCodeEnum.CLIENT_ERROR, null, msg);
     }
 
     /**
@@ -53,11 +53,11 @@ public class Response {
      * @param msg
      * @return
      */
-    public static Response serverErr(String msg){
-        return new Response(ResponseCodeEnum.SERVER_ERROR, null, msg);
+    public static JsonResponse serverErr(String msg){
+        return new JsonResponse(ResponseCodeEnum.SERVER_ERROR, null, msg);
     }
 
-    private Response(ResponseCodeEnum code, Object data, String msg){
+    private JsonResponse(ResponseCodeEnum code, T data, String msg){
         this.code = code.code;
         this.data = data;
         this.msg = msg;

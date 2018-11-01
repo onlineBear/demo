@@ -1,8 +1,9 @@
 package org.anson.demo.web.controller.sysUser;
 
-import org.anson.demo.pojo.po.sys.SysUserPo;
+import org.anson.demo.pojo.vo.sys.sysUser.param.AddVo;
+import org.anson.demo.pojo.vo.sys.sysUser.SysUserVo;
 import org.anson.demo.service.sys.SysUserService;
-import org.anson.demo.web.common.response.Response;
+import org.anson.demo.web.common.response.JsonResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,12 +14,12 @@ public class SysUserController {
     private SysUserService service;
 
     @GetMapping("/{id}")
-    public Response get(@PathVariable("id")Long id){
+    public JsonResponse<SysUserVo> get(@PathVariable("id")Long id){
         return service.getById(id);
     }
 
     @PostMapping("/add")
-    public Response add(SysUserPo user){
+    public JsonResponse<SysUserVo> add(@RequestBody AddVo user){
         return service.add(user);
     }
 }
