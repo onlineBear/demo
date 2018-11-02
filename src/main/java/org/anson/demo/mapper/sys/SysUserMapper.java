@@ -1,8 +1,9 @@
 package org.anson.demo.mapper.sys;
 
 import java.util.List;
-import org.anson.demo.pojo.po.sys.SysUserPo;
-import org.anson.demo.pojo.Example;
+
+import org.anson.demo.javabean.biz.sys.sysUser.SysUser;
+import org.anson.demo.javabean.framework.query.Example;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,28 +11,37 @@ import org.springframework.stereotype.Repository;
 /**
  * 用户mapper
  */
-@Repository   // 加这个 @Repository 注解, 只是单纯不想让 idea 报 不能注入 mapper的错
+@Repository
 @Mapper
 public interface SysUserMapper {
+
+    /**
+     * 根据 用户编码 查找用户
+     * @param no
+     * @return
+     */
+    public SysUser selByNo(@Param(("no")) String no);
+
+    // 通用
     long countByExample(Example example);
 
     int deleteByExample(Example example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(SysUserPo record);
+    int insert(SysUser record);
 
-    int insertSelective(SysUserPo record);
+    int insertSelective(SysUser record);
 
-    List<SysUserPo> selectByExample(Example example);
+    List<SysUser> selectByExample(Example example);
 
-    SysUserPo selectByPrimaryKey(Long id);
+    SysUser selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") SysUserPo record, @Param("example") Example example);
+    int updateByExampleSelective(@Param("record") SysUser record, @Param("example") Example example);
 
-    int updateByExample(@Param("record") SysUserPo record, @Param("example") Example example);
+    int updateByExample(@Param("record") SysUser record, @Param("example") Example example);
 
-    int updateByPrimaryKeySelective(SysUserPo record);
+    int updateByPrimaryKeySelective(SysUser record);
 
-    int updateByPrimaryKey(SysUserPo record);
+    int updateByPrimaryKey(SysUser record);
 }

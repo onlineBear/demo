@@ -6,7 +6,7 @@ import lombok.Data;
  * 响应格式
  */
 @Data
-public class JsonResponse<T> {
+public class JsonResponse {
     /**
      * 状态码
      */
@@ -15,7 +15,7 @@ public class JsonResponse<T> {
     /**
      * 数据
      */
-    private T data;
+    private Object data;
 
     /**
      * 信息
@@ -57,7 +57,7 @@ public class JsonResponse<T> {
         return new JsonResponse(ResponseCodeEnum.SERVER_ERROR, null, msg);
     }
 
-    private JsonResponse(ResponseCodeEnum code, T data, String msg){
+    private JsonResponse(ResponseCodeEnum code, Object data, String msg){
         this.code = code.code;
         this.data = data;
         this.msg = msg;

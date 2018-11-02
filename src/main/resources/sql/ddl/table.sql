@@ -17,6 +17,7 @@ create table SysUser
 (
   id numeric(19) not null,
   lastUpdateTime datetime not null,
+  createTime datetime not null,
 
   no nvarchar(20) not null,			        -- 用户编码, 唯一
   name nvarchar(40) not null,           -- 用户名

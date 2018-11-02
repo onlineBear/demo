@@ -1,6 +1,6 @@
-package org.anson.demo.domain;
+package org.anson.demo.domain.framework;
 
-import org.anson.demo.pojo.Example;
+import org.anson.demo.javabean.framework.query.Example;
 
 import java.util.List;
 
@@ -33,9 +33,9 @@ public interface IBaseDomain<PO, BO> {
     /**
      * 插入记录
      * @param record
-     * @return
+     * @return 主键
      */
-    public int save(PO record);
+    public Long save(PO record);
 
     /**
      * 插入记录

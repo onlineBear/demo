@@ -1,4 +1,4 @@
-package org.anson.demo.pojo;
+package org.anson.demo.javabean.framework.query;
 
 import java.util.ArrayList;
 import java.util.Date;

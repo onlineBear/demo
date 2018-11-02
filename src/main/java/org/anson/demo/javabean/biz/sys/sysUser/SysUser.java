@@ -1,13 +1,13 @@
-package org.anson.demo.pojo.po.sys;
+package org.anson.demo.javabean.biz.sys.sysUser;
 
 import lombok.Data;
-import org.anson.demo.pojo.po.BasePo;
+import org.anson.demo.javabean.framework.entity.BaseEntity;
 
 /**
- * 用户 po
+ * 用户 entity
  */
 @Data
-public class SysUserPo extends BasePo {
+public class SysUser extends BaseEntity {
     /**
      * 用户编码
      */

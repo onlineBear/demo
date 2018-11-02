@@ -1,7 +1,6 @@
-package org.anson.demo.pojo.bo.sys;
+package org.anson.demo.javabean.biz.sys.sysUser;
 
 import lombok.Data;
-import org.anson.demo.pojo.po.sys.SysUserPo;
 import org.springframework.cglib.beans.BeanCopier;
 
 import java.util.ArrayList;
@@ -15,6 +14,8 @@ import java.util.List;
 public class SysUserBo {
     private Long id;
 
+    private Date createTime;
+
     private Date lastUpdateTime;
 
     private String no;
@@ -25,10 +26,10 @@ public class SysUserBo {
 
     private String mobile;
 
-    private static final BeanCopier boCopier = BeanCopier.create(SysUserPo.class, SysUserBo.class, false);
-    //private static final BeanCopier poCopier = BeanCopier.create(SysUserBo.class, SysUserPo.class, false);
+    private static final BeanCopier boCopier = BeanCopier.create(SysUser.class, SysUserBo.class, false);
+    //private static final BeanCopier poCopier = BeanCopier.create(SysUserBo.class, SysUser.class, false);
 
-    public static SysUserBo po2bo(SysUserPo po) {
+    public static SysUserBo entity2bo(SysUser po) {
         if(po == null){
             return null;
         }
@@ -39,14 +40,14 @@ public class SysUserBo {
         return bo;
     }
 
-    public static List<SysUserBo> po2bo(List<SysUserPo> poList) {
+    public static List<SysUserBo> entity2bo(List<SysUser> poList) {
         if(poList == null || poList.size() <= 0){
             return null;
         }
 
         List<SysUserBo> boList = new ArrayList<>();
-        for(SysUserPo po: poList){
-            boList.add(SysUserBo.po2bo(po));
+        for(SysUser po: poList){
+            boList.add(SysUserBo.entity2bo(po));
         }
 
         return boList;

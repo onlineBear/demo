@@ -33,7 +33,7 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <!-- po 类包名 -->
+        <!-- entity 类包名 -->
         <javaModelGenerator targetPackage="org.anson.demo.po.sys" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="false"/>

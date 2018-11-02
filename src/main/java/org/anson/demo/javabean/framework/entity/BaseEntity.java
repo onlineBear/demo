@@ -1,14 +1,14 @@
-package org.anson.demo.pojo.po;
+package org.anson.demo.javabean.framework.entity;
 
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * po 通用属性
+ * entity 通用属性
  */
 @Data
-public class BasePo {
+public class BaseEntity {
     /**
      * 主键
      */
@@ -18,6 +18,16 @@ public class BasePo {
      * 主键列 - id
      */
     public static final String ID = "id";
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 创建时间列 - createTime
+     */
+    public static final String CREATETIME = "createTime";
 
     /**
      * 最后更新时间

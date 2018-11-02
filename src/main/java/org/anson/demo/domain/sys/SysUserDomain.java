@@ -1,10 +1,13 @@
 package org.anson.demo.domain.sys;
 
-import org.anson.demo.domain.IBaseDomain;
-import org.anson.demo.pojo.Example;
-import org.anson.demo.pojo.bo.sys.SysUserBo;
+import org.anson.demo.constant.Constant;
+import org.anson.demo.domain.framework.IBaseDomain;
+import org.anson.demo.javabean.biz.sys.sysUser.dto.GetDto;
+import org.anson.demo.tool.helper.id.IdHelper;
+import org.anson.demo.javabean.framework.query.Example;
+import org.anson.demo.javabean.biz.sys.sysUser.SysUser;
+import org.anson.demo.javabean.biz.sys.sysUser.SysUserBo;
 import org.anson.demo.mapper.sys.SysUserMapper;
-import org.anson.demo.pojo.po.sys.SysUserPo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,9 +16,55 @@ import java.util.Date;
 import java.util.List;
 
 @Component
-public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
+public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
     @Autowired
     private SysUserMapper mapper;
+
+    public SysUserBo selByNo(String no){
+        SysUser sysUser = mapper.selByNo(no);
+        return SysUserBo.entity2bo(sysUser);
+    }
+
+    public List<SysUserBo> sel(GetDto dto){
+        System.err.println(dto.toString());
+
+        Date nowTime = new Date();
+        Example example = new Example();
+
+        if(dto == null){
+            List<SysUser> userList = mapper.selectByExample(example);
+            return SysUserBo.entity2bo(userList);
+        }
+
+        Example.Criteria criteria = example.createCriteria();
+
+        if(!StringUtils.isEmpty(dto.getNo())){
+            criteria.andEqualTo(SysUser.NO, dto.getNo());
+        }
+
+        if(!StringUtils.isEmpty(dto.getMobile())){
+            criteria.andEqualTo(SysUser.MOBILE, dto.getMobile());
+        }
+
+        if(dto.getLastUpdateTime() != null){
+            criteria.andGreaterThan(SysUser.LASTUPDATETIME, dto.getLastUpdateTime());
+        }
+
+        if(dto.getBeginCreateTime() != null){
+            criteria.andGreaterThan(SysUser.CREATETIME, dto.getBeginCreateTime());
+        }
+
+        criteria.andLessThan(SysUser.CREATETIME, dto.getEndCreateTime()==null?nowTime:dto.getEndCreateTime());
+
+        criteria.andLike(SysUser.NAME, "%" + dto.getName() + "%");
+
+        if(StringUtils.isNotEmpty(dto.getOrderByClause())){
+            example.setOrderByClause(dto.getOrderByClause());
+        }
+
+        List<SysUser> userList = mapper.selectByExample(example);
+        return SysUserBo.entity2bo(userList);
+    }
 
     @Override
     public long countByExample(Example example){
@@ -34,7 +83,7 @@ public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
     }
 
     @Override
-    public int save(SysUserPo record){
+    public Long save(SysUser record){
         if(record == null){
             throw new RuntimeException("record is null");
         }
@@ -46,7 +95,8 @@ public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
 
         Date nowTime = new Date();
 
-        record.setId(1L);
+        record.setId(IdHelper.nextId());
+        record.setCreateTime(nowTime);
         record.setLastUpdateTime(nowTime);
 
         if(StringUtils.isEmpty(record.getName())){
@@ -61,33 +111,40 @@ public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
             record.setMobile("");
         }
 
-        return mapper.insert(record);
+        // 已存在该用户编码
+        if(mapper.selByNo(record.getNo()) != null){
+            throw new RuntimeException("no has exists");
+        }
+
+        mapper.insert(record);
+
+        return record.getId();
     }
 
     @Override
-    public int save(List<SysUserPo> recordList){
+    public int save(List<SysUser> recordList){
         throw new RuntimeException("暂不支持");
     }
 
     @Override
-    public int saveOrUpdate(SysUserPo record){
+    public int saveOrUpdate(SysUser record){
         throw new RuntimeException("暂不支持");
         //return 0;
     }
 
     @Override
-    public int saveOrUpdate(List<SysUserPo> record){
+    public int saveOrUpdate(List<SysUser> record){
         throw new RuntimeException("暂不支持");
     }
 
     @Override
     public List<SysUserBo> selByExample(Example example){
-        return SysUserBo.po2bo(mapper.selectByExample(example));
+        return SysUserBo.entity2bo(mapper.selectByExample(example));
     }
 
     @Override
     public SysUserBo selById(Long id){
-        return SysUserBo.po2bo(mapper.selectByPrimaryKey(id));
+        return SysUserBo.entity2bo(mapper.selectByPrimaryKey(id));
     }
 
     @Override
@@ -96,7 +153,7 @@ public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
     }
 
     @Override
-    public int updateByExampleSelective(SysUserPo record, Example example){
+    public int updateByExampleSelective(SysUser record, Example example){
         Date nowTime = new Date();
 
         // id 不更新
@@ -110,7 +167,7 @@ public class SysUserDomain implements IBaseDomain<SysUserPo, SysUserBo> {
     }
 
     @Override
-    public int updateByIdSelective(SysUserPo record){
+    public int updateByIdSelective(SysUser record){
         if(record == null || record.getId() == null){
             return 0;
         }

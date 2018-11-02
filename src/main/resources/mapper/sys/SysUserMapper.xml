@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.anson.demo.mapper.sys.SysUserMapper">
 
-  <resultMap id="BaseResultMap" type="org.anson.demo.pojo.po.sys.SysUserPo">
+  <resultMap id="BaseResultMap" type="org.anson.demo.javabean.biz.sys.sysUser.SysUser">
     <id column="id" jdbcType="NUMERIC" property="id" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
     <result column="lastUpdateTime" jdbcType="TIMESTAMP" property="lastUpdateTime" />
     <result column="no" jdbcType="NVARCHAR" property="no" />
     <result column="name" jdbcType="NVARCHAR" property="name" />
@@ -72,10 +73,11 @@
   </sql>
 
   <sql id="Base_Column_List">
-    id, lastUpdateTime, no, name, password, mobile
+    id, createTime, lastUpdateTime,
+    no, name, password, mobile
   </sql>
 
-  <select id="selectByExample" parameterType="org.anson.demo.pojo.Example" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="org.anson.demo.javabean.framework.query.Example" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -95,35 +97,36 @@
     select
     <include refid="Base_Column_List" />
     from SysUser
-    where id = #{id,jdbcType=NUMERIC}
+    where id = #{id}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="Long">
     delete from SysUser
-    where id = #{id,jdbcType=NUMERIC}
+    where id = #{id}
   </delete>
 
-  <delete id="deleteByExample" parameterType="org.anson.demo.pojo.Example">
+  <delete id="deleteByExample" parameterType="org.anson.demo.javabean.framework.query.Example">
     delete from SysUser
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
 
-  <insert id="insert" parameterType="org.anson.demo.pojo.po.sys.SysUserPo">
-    insert into SysUser (id, lastUpdateTime, no,
-      name, password, mobile
-      )
-    values (#{id,jdbcType=NUMERIC}, #{lastUpdateTime,jdbcType=TIMESTAMP}, #{no,jdbcType=NVARCHAR},
-      #{name,jdbcType=NVARCHAR}, #{password,jdbcType=NVARCHAR}, #{mobile,jdbcType=NVARCHAR}
-      )
+  <insert id="insert" parameterType="org.anson.demo.javabean.biz.sys.sysUser.SysUser">
+    insert into SysUser (id, createTime, lastUpdateTime,
+                         no, name, password, mobile)
+    values (#{id}, #{createTime}, #{lastUpdateTime},
+            #{no}, #{name}, #{password}, #{mobile})
   </insert>
 
-  <insert id="insertSelective" parameterType="org.anson.demo.pojo.po.sys.SysUserPo">
+  <insert id="insertSelective" parameterType="org.anson.demo.javabean.biz.sys.sysUser.SysUser">
     insert into SysUser
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="createTime != null">
+        createTime,
       </if>
       <if test="lastUpdateTime != null">
         lastUpdateTime,
@@ -143,27 +146,30 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=NUMERIC},
+        #{id},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
       </if>
       <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
+        #{lastUpdateTime},
       </if>
       <if test="no != null">
-        #{no,jdbcType=NVARCHAR},
+        #{no},
       </if>
       <if test="name != null">
-        #{name,jdbcType=NVARCHAR},
+        #{name},
       </if>
       <if test="password != null">
-        #{password,jdbcType=NVARCHAR},
+        #{password},
       </if>
       <if test="mobile != null">
-        #{mobile,jdbcType=NVARCHAR},
+        #{mobile},
       </if>
     </trim>
   </insert>
 
-  <select id="countByExample" parameterType="org.anson.demo.pojo.Example" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="org.anson.demo.javabean.framework.query.Example" resultType="java.lang.Long">
     select count(1) from SysUser
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -173,23 +179,20 @@
   <update id="updateByExampleSelective" parameterType="map">
     update SysUser
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=NUMERIC},
-      </if>
       <if test="record.lastUpdateTime != null">
-        lastUpdateTime = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+        lastUpdateTime = #{record.lastUpdateTime},
       </if>
       <if test="record.no != null">
-        no = #{record.no,jdbcType=NVARCHAR},
+        no = #{record.no},
       </if>
       <if test="record.name != null">
-        name = #{record.name,jdbcType=NVARCHAR},
+        name = #{record.name},
       </if>
       <if test="record.password != null">
-        password = #{record.password,jdbcType=NVARCHAR},
+        password = #{record.password},
       </if>
       <if test="record.mobile != null">
-        mobile = #{record.mobile,jdbcType=NVARCHAR},
+        mobile = #{record.mobile},
       </if>
     </set>
     <if test="_parameter != null">
@@ -199,46 +202,52 @@
 
   <update id="updateByExample" parameterType="map">
     update SysUser
-    set id = #{record.id,jdbcType=NUMERIC},
-      lastUpdateTime = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
-      no = #{record.no,jdbcType=NVARCHAR},
-      name = #{record.name,jdbcType=NVARCHAR},
-      password = #{record.password,jdbcType=NVARCHAR},
-      mobile = #{record.mobile,jdbcType=NVARCHAR}
+    set lastUpdateTime = #{record.lastUpdateTime},
+        no = #{record.no},
+        name = #{record.name},
+        password = #{record.password},
+        mobile = #{record.mobile}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
 
-  <update id="updateByPrimaryKeySelective" parameterType="org.anson.demo.pojo.po.sys.SysUserPo">
+  <update id="updateByPrimaryKeySelective" parameterType="org.anson.demo.javabean.biz.sys.sysUser.SysUser">
     update SysUser
     <set>
       <if test="lastUpdateTime != null">
-        lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
+        lastUpdateTime = #{lastUpdateTime},
       </if>
       <if test="no != null">
-        no = #{no,jdbcType=NVARCHAR},
+        no = #{no},
       </if>
       <if test="name != null">
-        name = #{name,jdbcType=NVARCHAR},
+        name = #{name},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=NVARCHAR},
+        password = #{password},
       </if>
       <if test="mobile != null">
-        mobile = #{mobile,jdbcType=NVARCHAR},
+        mobile = #{mobile},
       </if>
     </set>
-    where id = #{id,jdbcType=NUMERIC}
+    where id = #{id}
   </update>
 
-  <update id="updateByPrimaryKey" parameterType="org.anson.demo.pojo.po.sys.SysUserPo">
+  <update id="updateByPrimaryKey" parameterType="org.anson.demo.javabean.biz.sys.sysUser.SysUser">
     update SysUser
-    set lastUpdateTime = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      no = #{no,jdbcType=NVARCHAR},
-      name = #{name,jdbcType=NVARCHAR},
-      password = #{password,jdbcType=NVARCHAR},
-      mobile = #{mobile,jdbcType=NVARCHAR}
-    where id = #{id,jdbcType=NUMERIC}
+    set lastUpdateTime = #{lastUpdateTime},
+        no = #{no},
+        name = #{name},
+        password = #{password},
+        mobile = #{mobile}
+    where id = #{id}
   </update>
+
+  <select id="selByNo" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from SysUser
+    where no = #{no}
+  </select>
 </mapper>
