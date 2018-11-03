@@ -3,10 +3,13 @@ package org.anson.demo.web.controller.sysUser;
 import org.anson.demo.javabean.biz.sys.sysUser.dto.AddDto;
 import org.anson.demo.javabean.biz.sys.sysUser.dto.GetByNoDto;
 import org.anson.demo.javabean.biz.sys.sysUser.dto.GetDto;
+import org.anson.demo.javabean.biz.sys.sysUser.vo.SysUserVo;
 import org.anson.demo.service.sys.SysUserService;
-import org.anson.demo.web.common.response.JsonResponse;
+import org.anson.demo.web.common.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -15,17 +18,17 @@ public class SysUserController {
     private SysUserService service;
 
     @PostMapping("/getByNo")
-    public JsonResponse getByNo(@RequestBody GetByNoDto dto){
-        return JsonResponse.ok(service.getByNo(dto.getNo()));
+    public Response<SysUserVo> getByNo(@RequestBody GetByNoDto dto){
+        return Response.ok(service.getByNo(dto.getNo()));
     }
 
     @PostMapping("/get")
-    public JsonResponse get(@RequestBody GetDto dto){
-        return JsonResponse.ok(service.get(dto));
+    public Response<List<SysUserVo>> get(@RequestBody GetDto dto){
+        return Response.ok(service.get(dto));
     }
 
     @PostMapping("/add")
-    public JsonResponse add(@RequestBody AddDto dto){
-        return JsonResponse.ok(service.add(dto));
+    public Response<SysUserVo> add(@RequestBody AddDto dto){
+        return Response.ok(service.add(dto));
     }
 }
