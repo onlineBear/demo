@@ -220,16 +220,21 @@ logging:
         </encoder>
     </appender>
 
-    <!-- debug/info 只输出项目的包, 不输出项目以外的; 输出以后, 日志不再向上传递(additivity="false") -->
+    <!-- 输出项目的包, 不输出项目以外的; 输出以后, 日志不再向上传递(additivity="false") -->
     <logger name="${project.root}" level="${log.level}" additivity="false">
         <appender-ref ref="DEBUG_FILE" />
         <appender-ref ref="INFO_FILE" />
-        <!-- 生产环境请注释掉 DEBUG_CONSOLE 和 INFO_CONSOLE, 生产环境不需要输出到控制台 -->
+        <appender-ref ref="WARN_FILE" />
+        <appender-ref ref="ERROR_FILE" />
+
+        <!-- 生产环境请注释掉 {level}_CONSOLE, 生产环境不需要输出到控制台 -->
         <appender-ref ref="DEBUG_CONSOLE" />
         <appender-ref ref="INFO_CONSOLE" />
+        <appender-ref ref="WARN_CONSOLE" />
+        <appender-ref ref="ERROR_CONSOLE" />
     </logger>
 
-    <!-- warn/error 输出所有的包 -->
+    <!-- warn/error 输出所有的包(除项目的包) -->
     <root level="${log.level}">
         <appender-ref ref="WARN_FILE" />
         <appender-ref ref="ERROR_FILE" />
@@ -240,15 +245,3 @@ logging:
 
 </configuration>
 ```
-
-# logback 知识
-
-## root 节点
-
-## appender 节点
-
-- 格式化日志输出
-
-## logger
-
-## [格式](https://logback.qos.ch/manual/layouts.html)
