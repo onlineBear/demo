@@ -57,6 +57,10 @@ public class Response<T> {
         return new Response(ResponseCodeEnum.SERVER_ERROR, null, msg);
     }
 
+    public static Response notFound(){
+        return new Response(ResponseCodeEnum.NOT_FOUND, null, "url 错误");
+    }
+
     private Response(ResponseCodeEnum code, T data, String msg){
         this.code = code.code;
         this.data = data;

@@ -19,8 +19,12 @@
 
 - 不使用字符串拼接, 使用占位符
 
-> eg: 不应这样写 logger.info("a = " + a);
-> 应该这样写 logger.info("a = {}", a);
+> eg: 不应这样写 log.info("a = " + a);
+> 应该这样写 log.info("a = {}", a);
+
+- 打印堆栈信息 error(String, Throwable)
+
+> log.error(e.toString(), e);
 
 ## 根节点
 
