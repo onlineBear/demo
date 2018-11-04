@@ -1,7 +1,7 @@
 package org.anson.demo.domain.sys;
 
-import org.anson.demo.constant.Constant;
 import org.anson.demo.domain.framework.IBaseDomain;
+import org.anson.demo.framework.exception.custom.BizException;
 import org.anson.demo.javabean.biz.sys.sysUser.dto.GetDto;
 import org.anson.demo.tool.helper.id.IdHelper;
 import org.anson.demo.javabean.framework.query.Example;
@@ -77,18 +77,18 @@ public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
 
     @Override
     public int delByIdList(List<Object> idList){
-        throw new RuntimeException("暂不支持");
+        throw new BizException("暂不支持");
     }
 
     @Override
     public Long save(SysUser record){
         if(record == null){
-            throw new RuntimeException("record is null");
+            throw new BizException("record is null");
         }
 
         // 用户编码必输
         if(StringUtils.isBlank(record.getNo())){
-            throw new RuntimeException("no is null");
+            throw new BizException("no is null");
         }
 
         Date nowTime = new Date();
@@ -111,7 +111,7 @@ public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
 
         // 已存在该用户编码
         if(mapper.selByNo(record.getNo()) != null){
-            throw new RuntimeException("no has exists");
+            throw new BizException("no has exists");
         }
 
         mapper.insert(record);
@@ -121,18 +121,18 @@ public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
 
     @Override
     public int save(List<SysUser> recordList){
-        throw new RuntimeException("暂不支持");
+        throw new BizException("暂不支持");
     }
 
     @Override
     public int saveOrUpdate(SysUser record){
-        throw new RuntimeException("暂不支持");
+        throw new BizException("暂不支持");
         //return 0;
     }
 
     @Override
     public int saveOrUpdate(List<SysUser> record){
-        throw new RuntimeException("暂不支持");
+        throw new BizException("暂不支持");
     }
 
     @Override
@@ -147,7 +147,7 @@ public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
 
     @Override
     public List<SysUserBo> selByIdList(List<Object> idList){
-        throw new RuntimeException("暂不支持");
+        throw new BizException("暂不支持");
     }
 
     @Override

@@ -37,7 +37,7 @@ public class ExceptionHandle {
 
         // 服务端错误
         else if(e instanceof BizException){
-            return Response.serverErr(e.toString());
+            return Response.serverErr(((BizException) e).getMsg());
         }
         // sql错误
         else if (e instanceof DuplicateKeyException || e instanceof UncategorizedSQLException
@@ -46,7 +46,7 @@ public class ExceptionHandle {
                 || e instanceof OptimisticLockingFailureException || e instanceof UncategorizedDataAccessException || e instanceof BadSqlGrammarException) {
             return Response.serverErr(e.getCause().getMessage());
         }else {
-            return Response.serverErr(e.toString());
+            return Response.serverErr(e.getMessage()==null?e.toString():e.getMessage());
         }
     }
 }
