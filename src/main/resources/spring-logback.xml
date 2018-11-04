@@ -177,12 +177,10 @@
         <appender-ref ref="ERROR_CONSOLE" />
     </logger>
 
-    <!-- warn/error 输出所有的包(除项目的包) -->
+    <!-- error 输出所有的包(除项目的包) -->
     <root level="${log.level}">
-        <appender-ref ref="WARN_FILE" />
         <appender-ref ref="ERROR_FILE" />
-        <!-- 生产环境请注释掉 DEBUG_CONSOLE 和 INFO_CONSOLE, 生产环境不需要输出到控制台 -->
-        <appender-ref ref="WARN_CONSOLE" />
+        <!-- 生产环境请注释掉 ERROR_CONSOLE, 生产环境不需要输出到控制台 -->
         <appender-ref ref="ERROR_CONSOLE" />
     </root>
 
