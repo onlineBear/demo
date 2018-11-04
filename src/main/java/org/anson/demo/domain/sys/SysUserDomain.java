@@ -26,8 +26,6 @@ public class SysUserDomain implements IBaseDomain<SysUser, SysUserBo> {
     }
 
     public List<SysUserBo> sel(GetDto dto){
-        System.err.println(dto.toString());
-
         Date nowTime = new Date();
         Example example = new Example();
 
