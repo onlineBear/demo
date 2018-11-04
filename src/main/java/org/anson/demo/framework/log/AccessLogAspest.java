@@ -24,10 +24,22 @@ public class AccessLogAspest {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    // 切点 controller
+    /**
+     * 切点 controller
+     */
     @Pointcut("execution(public * org.anson.demo.web.controller..*.*(..))")
     public void AccessLog(){}
 
+    /**
+     * 切点 异常
+     */
+    @Pointcut("execution(public * org.anson.demo.framework.exception.ExceptionHandle.handle(..))")
+    public void AccessExceptionLog(){}
+
+    /**
+     * 输出请求日志
+     * @param joinPoint
+     */
     @Before("AccessLog()")
     public void doBefore(JoinPoint joinPoint) {
         // 接收到请求，记录请求内容
@@ -42,9 +54,25 @@ public class AccessLogAspest {
         log.info("args : {}", Arrays.toString(joinPoint.getArgs()));
     }
 
+    /**
+     * 输出响应成功日志
+     * @param ret
+     * @throws JsonProcessingException
+     */
     @AfterReturning(returning = "ret", pointcut = "AccessLog()")
     public void doAfterReturning(Object ret) throws JsonProcessingException {
         // 处理完请求，返回内容
         log.info("response : {}", AccessLogAspest.objectMapper.writeValueAsString(ret));
+    }
+
+    /**
+     * 输出响应异常日志
+     * @param ret
+     * @throws JsonProcessingException
+     */
+    @AfterReturning(returning = "ret", pointcut = "AccessExceptionLog()")
+    public void doAfterExceptionReturning(Object ret) throws JsonProcessingException {
+        // 处理完请求，返回内容
+        log.info("response : {}", objectMapper.writeValueAsString(ret));
     }
 }
