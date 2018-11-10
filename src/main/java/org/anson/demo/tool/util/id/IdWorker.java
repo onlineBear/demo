@@ -64,12 +64,19 @@ public class IdWorker {
     }
 
     public static void main(String[] args) {
-        /*
+
         IdWorker idWorker = new IdWorker(0, 0);
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 10; i++) {
             long id = idWorker.nextId();
             System.out.println(id);
         }
-        */
+
+        System.out.println("---");
+        IdWorker idWorker2 = new IdWorker(0, 1);
+        for (int i = 0; i < 10; i++) {
+            long id = idWorker2.nextId();
+            System.out.println(id);
+        }
+
     }
 }
